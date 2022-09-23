@@ -58,7 +58,9 @@ void initPhysics(bool interactive)
 
 	Vector3 Pos = { 0.0, 0.0, 0.0 };
 	Vector3 Vel = { 10.0, 10.0, 0.0 };
-	gParticle = new Particle(Pos, Vel);
+	Vector3 Acel = { 2,2,2 };
+	double Damping = 0.999;
+	gParticle = new Particle(Pos, Vel, Acel, Damping);
 
 	}
 
