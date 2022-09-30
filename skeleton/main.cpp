@@ -8,8 +8,10 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 #include "Particle.h"
+#include "Proyectil.h"
 
 #include <iostream>
+#include <vector>
 
 
 
@@ -29,6 +31,8 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 Particle* gParticle = NULL;
+
+vect <Proyectil> proyectiles;
 ContactReportCallback gContactReportCallback;
 
 
@@ -57,10 +61,11 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	Vector3 Pos = { 0.0, 0.0, 0.0 };
-	Vector3 Vel = { 10.0, 10.0, 0.0 };
-	Vector3 Acel = { 2,2,2 };
+	Vector3 Vel = { 5.0, 5.0, 0.0 };
+	Vector3 Acel = { 1.1,1.1,1.1 };
 	double Damping = 0.999;
-	gParticle = new Particle(Pos, Vel, Acel, Damping);
+	int Mass = 300;
+	gParticle = new Particle(Pos, Vel, Acel, Damping, 300);
 
 	}
 
@@ -104,8 +109,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	//case 'B': break;
 	//case ' ':	break;
-	case ' ':
+	case 'C':
 	{
+		new Proyectil(CAÑON);
 		break;
 	}
 	default:
