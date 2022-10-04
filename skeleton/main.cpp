@@ -32,7 +32,7 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 Particle* gParticle = NULL;
 
-vect <Proyectil> proyectiles;
+//vect <Proyectil> proyectiles;
 ContactReportCallback gContactReportCallback;
 
 
@@ -65,7 +65,7 @@ void initPhysics(bool interactive)
 	Vector3 Acel = { 1.1,1.1,1.1 };
 	double Damping = 0.999;
 	int Mass = 300;
-	gParticle = new Particle(Pos, Vel, Acel, Damping, 300);
+	gParticle = new Particle(Pos, Vel, Acel, Damping, Mass);
 
 	}
 

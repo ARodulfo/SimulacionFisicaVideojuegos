@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, int Mass)
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float Mass)
 {
 	pose = physx::PxTransform(Pos.x, Pos.y, Pos.z);
 	vel = Vel;
@@ -13,9 +13,6 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, int M
 	//RegisterRenderItem(renderItem);
 }
 
-Particle::Particle() {
-
-}
 
 Particle::~Particle()
 {
