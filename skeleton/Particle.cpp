@@ -24,3 +24,29 @@ void Particle::integrate(double t)
 	pose.p = pose.p + vel * t;
 	vel = vel * pow(damping, t) + acel * t;
 }
+
+void Particle::setVel(Vector3 velocidad)
+{
+	vel = velocidad;
+}
+
+void Particle::setPos(Vector3 posicion)
+{
+	pose.p = posicion;
+}
+
+void Particle::setAcel(Vector3 aceleracion)
+{
+	acel = aceleracion;
+}
+
+void Particle::setDamp(double damp)
+{
+	damping = damp;
+}
+
+void Particle::setMass(float masa)
+{
+	mass = masa;
+}
+

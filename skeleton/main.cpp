@@ -27,7 +27,7 @@ PxPhysics*				gPhysics	= NULL;
 PxMaterial*				gMaterial	= NULL;
 
 PxPvd*                  gPvd        = NULL;
-
+std::vector<Proyectil*>	proyectiles;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 Particle* gParticle = NULL;
@@ -60,12 +60,12 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	Vector3 Pos = { 0.0, 0.0, 0.0 };
+	/*Vector3 Pos = { 0.0, 0.0, 0.0 };
 	Vector3 Vel = { 5.0, 5.0, 0.0 };
 	Vector3 Acel = { 1.1,1.1,1.1 };
 	double Damping = 0.999;
 	int Mass = 300;
-	gParticle = new Particle(Pos, Vel, Acel, Damping, Mass);
+	gParticle = new Particle(Pos, Vel, Acel, Damping, Mass);*/
 
 	}
 
@@ -111,7 +111,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case 'C':
 	{
-		new Proyectil(CAÑON);
+		//new Proyectil(CAÑON);
 		break;
 	}
 	default:

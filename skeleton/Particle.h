@@ -5,7 +5,7 @@
 class Particle
 {
 public:
-	//Particle();
+	Particle() { renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(5)), &pose, { 1.0,1.0,1.0,1.0 }); };
 	Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float Mass);
 	~Particle();
 
@@ -14,7 +14,7 @@ public:
 protected:
 
 	void setVel(Vector3 velocidad);
-	void setPos(physx::PxTransform posicion);
+	void setPos(Vector3 posicion);
 	void setAcel(Vector3 aceleracion);
 	void setDamp(double damp);
 	void setMass(float masa);
