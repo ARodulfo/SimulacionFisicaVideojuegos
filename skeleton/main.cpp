@@ -61,11 +61,11 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	Vector3 Pos = { 0.0, 0.0, 0.0 };
-	Vector3 Vel = { 5.0, 5.0, 0.0 };
-	Vector3 Acel = { 1.1,1.1,1.1 };
+	Vector3 Vel = { 0.0, 0.0, 0.0 };
+	Vector3 Acel = { 0.0,0.0,0.0 };
 	double Damping = 0.999;
 	int Mass = 300;
-	gParticle = new Particle(Pos, Vel, Acel, Damping, Mass);
+	gParticle = new Particle(GetCamera()->getTransform().p +  Vector3{ -100,0,-100 }, Vel, Acel, Damping, Mass, new RenderItem(CreateShape(PxSphereGeometry(2.25)), Vector4(1, 0, 1, 1)));
 
 	}
 
@@ -90,9 +90,9 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-	for (int i = 0; i < proyectiles.size(); i++) {
+	/*for (int i = 0; i < proyectiles.size(); i++) {
 		delete proyectiles[i];
-	}
+	}*/
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
 	gDispatcher->release();
@@ -117,7 +117,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case 'C':
 	{
-		Proyectil* proy = new Proyectil(CAÑON);
+		Proyectil* proy = new Proyectil(GetCamera()->getTransform().p, GetCamera()->getDir().getNormalized(), { 0.0,0.0,9.0 }, 0.99, 300, CAÑON, new RenderItem(CreateShape(PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)));
 		Vector3 dir = GetCamera()->getDir().getNormalized();
 		proyectiles.push_back(proy);
 		//new Proyectil(CAÑON);

@@ -5,8 +5,8 @@
 class Particle
 {
 public:
-	Particle() { };
-	Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float Mass);
+	//Particle() { };
+	Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float Mass, RenderItem* ri);
 	~Particle();
 
 	void integrate(double t);

@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float Mass)
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float Mass, RenderItem* ri)
 {
 	pose = physx::PxTransform(Pos.x, Pos.y, Pos.z);
 	vel = Vel;
@@ -8,7 +8,9 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float
 	
 	damping = Damping;
 
-	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(5)), &pose, { 1.0,1.0,1.0,1.0 });
+	renderItem = ri;
+	renderItem->transform = &pose;
+	renderItem->color = { 0.4,0.3,0.4,1 };
 	
 
 	//RegisterRenderItem(renderItem);

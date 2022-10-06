@@ -3,17 +3,16 @@
 #include "RenderUtils.hpp"
 
 
-Proyectil::Proyectil(tipoBala bala) : Particle() {
+Proyectil::Proyectil(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float Mass, tipoBala bala, RenderItem * ri) : Particle(Pos,  Vel,  Acel, Damping, Mass, ri) {
 
 	switch (bala) {
 	case CAÑON:
 		std::cout << "Hola";
-		setPos(GetCamera()->getTransform().p);
 		setMass(300);
-		setVel(GetCamera()->getDir().getNormalized() * 100);
-		setAcel({ 0.0,0.0,9.0 });
+		setVel(vel * 100);
+		setAcel({ 0.0,0.0,0.0 });
 		setDamp(0.99);
-		setRender(renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(5)), &pose, { 1.0,1.0,1.0,1.0 }) );
+		//setRender(renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(5)), &pose, { 1.0,1.0,1.0,1.0 }) );
 
 		break;
 	defeult:
