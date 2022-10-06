@@ -60,12 +60,12 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	/*Vector3 Pos = { 0.0, 0.0, 0.0 };
+	Vector3 Pos = { 0.0, 0.0, 0.0 };
 	Vector3 Vel = { 5.0, 5.0, 0.0 };
 	Vector3 Acel = { 1.1,1.1,1.1 };
 	double Damping = 0.999;
 	int Mass = 300;
-	gParticle = new Particle(Pos, Vel, Acel, Damping, Mass);*/
+	gParticle = new Particle(Pos, Vel, Acel, Damping, Mass);
 
 	}
 
@@ -76,10 +76,13 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-
+	for (int i = 0; i < proyectiles.size(); i++) {
+		proyectiles[i]->integrate(t);
+	}
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	gParticle->integrate(t);
+	
 }
 
 // Function to clean data
@@ -87,7 +90,9 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-
+	for (int i = 0; i < proyectiles.size(); i++) {
+		delete proyectiles[i];
+	}
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
 	gDispatcher->release();
@@ -97,6 +102,7 @@ void cleanupPhysics(bool interactive)
 	gPvd->release();
 	transport->release();
 	gParticle->~Particle();
+	
 	gFoundation->release();
 	}
 
@@ -111,6 +117,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case 'C':
 	{
+		Proyectil* proy = new Proyectil(CAÑON);
+		Vector3 dir = GetCamera()->getDir().getNormalized();
+		proyectiles.push_back(proy);
 		//new Proyectil(CAÑON);
 		break;
 	}
