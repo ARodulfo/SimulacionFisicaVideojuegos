@@ -90,9 +90,9 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-	/*for (int i = 0; i < proyectiles.size(); i++) {
-		proyectiles[i]->~Proyectil();
-	}*/
+	for (int i = 0; i < proyectiles.size(); i++) {
+		delete proyectiles[i];
+	}
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
 	gDispatcher->release();

@@ -22,7 +22,7 @@ Proyectil::Proyectil(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, flo
 
 Proyectil::~Proyectil()
 {
-	DeregisterRenderItem(renderItem);
+
 }
 
 //Vector3 posicion, Vector3 velocidad, Vector3 aceleracion, double damp, float masa,
