@@ -64,7 +64,7 @@ void initPhysics(bool interactive)
 	Vector3 Vel = { 0.0, 0.0, 0.0 };
 	Vector3 Acel = { 0.0,0.0,0.0 };
 	double Damping = 0.999;
-	int Mass = 300;
+	int Mass = 0;
 	gParticle = new Particle(GetCamera()->getTransform().p +  Vector3{ -100,0,-100 }, Vel, Acel, Damping, Mass, new RenderItem(CreateShape(PxSphereGeometry(2.25)), Vector4(1, 0, 1, 1)));
 
 	}
@@ -91,7 +91,7 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 	/*for (int i = 0; i < proyectiles.size(); i++) {
-		delete proyectiles[i];
+		proyectiles[i]->~Proyectil();
 	}*/
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
