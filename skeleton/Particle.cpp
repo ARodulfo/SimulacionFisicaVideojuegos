@@ -28,6 +28,11 @@ void Particle::integrate(double t)
 	vel = vel * pow(damping, t) + acel * t;
 }
 
+Particle* Particle::clone() const
+{
+	return nullptr;
+}
+
 void Particle::setVel(Vector3 velocidad)
 {
 	vel = velocidad;

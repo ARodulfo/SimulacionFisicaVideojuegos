@@ -11,6 +11,8 @@ public:
 
 	void integrate(double t);
 
+	virtual Particle* clone() const;
+
 protected:
 
 	void setVel(Vector3 velocidad);
@@ -23,10 +25,9 @@ protected:
 	physx::PxTransform getPose();
 
 
-	Vector3 vel;
+	Vector3 vel, acel;;
 	physx::PxTransform pose;
-	Vector3 acel;
-	double damping;
+	double damping, _remaining_time;
 	float mass;
 	RenderItem* renderItem;
 };

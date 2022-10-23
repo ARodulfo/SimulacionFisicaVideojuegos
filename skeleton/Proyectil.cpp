@@ -7,7 +7,6 @@ Proyectil::Proyectil(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, flo
 
 	switch (bala) {
 	case CAÑON:
-		std::cout << "Hola";
 		setMass(300);
 		setVel(vel * 100);
 		setAcel({ 0.0,-50.0,0.0 });
