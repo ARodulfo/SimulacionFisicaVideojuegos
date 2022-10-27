@@ -3,7 +3,7 @@
 #include "RenderUtils.hpp"
 
 
-Proyectil::Proyectil(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float Mass, tipoBala bala, RenderItem * ri) : Particle(Pos,  Vel,  Acel, Damping, Mass, ri) {
+Proyectil::Proyectil(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float Mass, float Gravity, tipoBala bala, RenderItem* ri, double tVida, bool viva, Vector3 aSpace) : Particle(Pos, Vel, Acel, Damping, Mass, Gravity, ri, tVida, viva,aSpace) {
 
 	switch (bala) {
 	case CAÑON:

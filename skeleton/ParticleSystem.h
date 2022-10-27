@@ -13,7 +13,9 @@ private:
 	std::list<ParticleGenerator*> _particle_generators;
 
 public:
+	ParticleSystem();
 	void update(double t);
+	void addGenerator(ParticleGenerator* gen);
 	ParticleGenerator* getParticleGenerator(std::string name);
 
 };

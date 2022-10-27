@@ -1,12 +1,18 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float Mass, RenderItem* ri)
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float Mass, float Gravity, RenderItem* ri,double tVida, bool viva, Vector3 aSpace)
 {
 	pose = physx::PxTransform(Pos.x, Pos.y, Pos.z);
 	vel = Vel;
 	acel = Acel;
-	
+	gravity = Gravity;
+	acel.y = gravity;
+
 	damping = Damping;
+	tiempoVida = tVida; 
+	estaViva = viva;
+
+	actionSpace = aSpace;
 
 	renderItem = ri;
 	renderItem->transform = &pose;
@@ -16,6 +22,13 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float
 	//RegisterRenderItem(renderItem);
 }
 
+//bool Particula::checkSpace()
+//{
+//	if (position.p.x > actionSpace.x || position.p.y > actionSpace.y || position.p.z > actionSpace.z)return false;
+//	else if (position.p.x < -actionSpace.x || position.p.y < -actionSpace.y || position.p.z < -actionSpace.z)return false;;
+//	return true;
+//
+//}
 
 Particle::~Particle()
 {
@@ -23,15 +36,17 @@ Particle::~Particle()
 }
 
 void Particle::integrate(double t)
-{
+{	
 	pose.p = pose.p + vel * t;
 	vel = vel * pow(damping, t) + acel * t;
+	tiempoVida -= t;
+	if (tiempoVida <= 0 || !getInActionSpace()) estaViva = false;
 }
 
-Particle* Particle::clone() const
+/*Particle* Particle::clone() const
 {
 	return nullptr;
-}
+}*/
 
 void Particle::setVel(Vector3 velocidad)
 {
@@ -62,6 +77,25 @@ void Particle::setRender(RenderItem* proyectil)
 {
 	renderItem = proyectil;
 }
+
+void Particle::setColor(Vector4 newColor)
+{
+	renderItem->color = newColor;
+}
+
+bool Particle::getViva()
+{
+	return estaViva;
+}
+
+bool Particle::getInActionSpace()
+{
+	if (pose.p.x < -actionSpace.x || pose.p.y < -actionSpace.y || pose.p.z < -actionSpace.z) return false;
+	else if (pose.p.x > actionSpace.x || pose.p.y > actionSpace.y || pose.p.z > actionSpace.z) return false;
+	return true;
+}
+
+
 
 physx::PxTransform Particle::getPose()
 {

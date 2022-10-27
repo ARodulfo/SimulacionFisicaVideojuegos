@@ -9,6 +9,8 @@
 #include "callbacks.hpp"
 #include "Particle.h"
 #include "Proyectil.h"
+#include "ParticleSystem.h"
+#include "GaussianParticleGenerator.h"
 
 #include <iostream>
 #include <vector>
@@ -31,6 +33,9 @@ std::vector<Proyectil*>	proyectiles;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 Particle* gParticle = NULL;
+ParticleSystem* sistema1 = NULL;
+GaussianParticleGenerator* gaussianGen = NULL;
+
 
 //vect <Proyectil> proyectiles;
 ContactReportCallback gContactReportCallback;
@@ -60,12 +65,17 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	Vector3 Pos = { 0.0, 0.0, 0.0 };
+	sistema1 = new ParticleSystem();
+	gaussianGen = new GaussianParticleGenerator({ 1.5,1.5,1.5 }, { 3.0,3.0,3.0 }, "fuente", { 1.0,1.0,1.0 }, { 10.0,25.0,2.0 }, 1, 5, { 1000.0,1000.0,1000.0 });
+	sistema1->addGenerator(gaussianGen);
+
+	/*Vector3 Pos = { 0.0, 0.0, 0.0 };
 	Vector3 Vel = { 0.0, 0.0, 0.0 };
 	Vector3 Acel = { 0.0,0.0,0.0 };
 	double Damping = 0.999;
 	int Mass = 0;
-	gParticle = new Particle(GetCamera()->getTransform().p +  Vector3{ -100,0,-100 }, Vel, Acel, Damping, Mass, new RenderItem(CreateShape(PxSphereGeometry(2.25)), Vector4(1, 0, 1, 1)));
+	float Gravity = 0;
+	gParticle = new Particle(GetCamera()->getTransform().p +  Vector3{ -100,0,-100 }, Vel, Acel, Damping, Mass, Gravity,new RenderItem(CreateShape(PxSphereGeometry(2.25)), Vector4(1, 0, 1, 1)),6, true);*/
 
 	}
 
@@ -81,8 +91,8 @@ void stepPhysics(bool interactive, double t)
 	}
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	gParticle->integrate(t);
-	
+	/*gParticle->integrate(t);*/
+	sistema1->update(t);
 }
 
 // Function to clean data
@@ -101,7 +111,7 @@ void cleanupPhysics(bool interactive)
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
 	transport->release();
-	gParticle->~Particle();
+	/*gParticle->~Particle();*/
 	
 	gFoundation->release();
 	}
@@ -117,7 +127,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case 'C':
 	{
-		Proyectil* proy = new Proyectil(GetCamera()->getTransform().p, GetCamera()->getDir().getNormalized(), { 0.0,0.0,9.0 }, 0.99, 300, CAÑON, new RenderItem(CreateShape(PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)));
+		Proyectil* proy = new Proyectil(GetCamera()->getTransform().p, GetCamera()->getDir().getNormalized(), { 0.0,0.0,9.0 }, 0.99, 300, -50.00,CAÑON, new RenderItem(CreateShape(PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 6, true,{0,0,0});
 		Vector3 dir = GetCamera()->getDir().getNormalized();
 		proyectiles.push_back(proy);
 		//new Proyectil(CAÑON);
