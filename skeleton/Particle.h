@@ -17,12 +17,13 @@ public:
 	void setMass(float masa);
 	void setRender(RenderItem* proyectil);
 	void setColor(Vector4 newColor);
+	void setTiempoVida(double tVida);
 	bool getViva();
 	bool getInActionSpace();
 
 	physx::PxTransform getPose();
 
-	//virtual Particle* clone() const;
+	virtual Particle* clone(Vector3 pos, Vector3 vel, float grav, double tVida, Vector3 aSpace);
 
 protected:
 	Vector3 vel, acel;

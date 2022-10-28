@@ -1,7 +1,8 @@
 #include "ParticleSystem.h"
+#include "GaussianParticleGenerator.h"
 
 ParticleSystem::ParticleSystem() {
-
+	createFireworkRules();
 }
 
 void ParticleSystem::update(double t) {
@@ -24,8 +25,8 @@ void ParticleSystem::update(double t) {
 
 				/*auto cast = dynamic_cast<Firework*>(*it);
 				if (cast != nullptr) {
-					auto a = cast->explode();
-					if (a.size() > 0)particulasGen.insert(particulasGen.begin(), a.begin(), a.end());
+					auto a = cast->explode(_firework_rules[0]);
+					if (a.size() > 0)_particles.insert(_particles.begin(), a.begin(), a.end());
 					a.clear();
 				}*/
 				if (*it != nullptr) {
@@ -36,9 +37,82 @@ void ParticleSystem::update(double t) {
 			else it++;
 		}
 	}
+	std::list<Firework*>::iterator it2 = _fireworks.begin();
+	while (it2 != _fireworks.end())
+	{
+
+		if (*it2 != NULL) {
+			(*it2)->integrate(t);
+			if (!(*it2)->getViva())
+			{
+				auto a = (*it2)->explode();
+				switch ((*it2)->getReglaActual()._tipo)
+				{
+				case (PARTICULAS_CIRCULO):
+					if (a.size() > 0)_particles.insert(_particles.begin(), a.begin(), a.end());
+					a.clear();
+					break;
+				case (GENERADOR):
+				{
+					GaussianParticleGenerator* gaussianGen = new GaussianParticleGenerator({ 1.5,1.5,1.5 }, { 3.0,3.0,3.0 }, "fuente", { 1.0,1.0,1.0 }, { 10.0,25.0,2.0 }, 1, 5, { 1000.0,1000.0,1000.0 }, (*it2)->getPose().p, false);
+					addGenerator(gaussianGen);
+					break;
+				}
+				case (FIREWORK):
+					break;
+				default:
+					break;
+				}
+					
+				/*auto cast = dynamic_cast<Firework*>(*it);
+				if (cast != nullptr) {
+					auto a = cast->explode(_firework_rules[0]);
+					if (a.size() > 0)_particles.insert(_particles.begin(), a.begin(), a.end());
+					a.clear();
+				}*/
+				if (*it2 != nullptr) {
+					delete* it2;
+					it2 = _fireworks.erase(it2);
+				}
+			}
+			else it2++;
+		}
+	}
 
 }
 
 void ParticleSystem::addGenerator(ParticleGenerator* gen) {
 	_particle_generators.push_back(gen);
+}
+
+void ParticleSystem::createFireworkRules()
+{
+	_firework_rules = std::vector<FireworkRule>(3);
+
+	_firework_rules[0].set(PARTICULAS_CIRCULO, 2, 2, 0.999, 15, { 5, 5, 5 }, { 2, 2, 2 }, 2.25);
+	_firework_rules[1].set(GENERADOR, 8, 2, 0.999, 1, { 7, 7, 7 }, { 2, 2, 2 }, 1);
+	_firework_rules[2].set(FIREWORK, 5, 2, 0.999, 3, { 5, 5, 5 }, { 2, 2, 2 }, 1);
+}
+
+std::vector<FireworkRule> ParticleSystem::getFireworkRules()
+{
+	return _firework_rules;
+}
+
+void ParticleSystem::generateFirework(FireworkRule reglaFirework)
+{
+	_fireworks.push_back(new Firework({ 2,0,1 }, { 14.0,22.0,1.0 }, { 0.0,0.0,0.0 }, 0.99, 100, -5, reglaFirework, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 1, true, { 100.0,100.0,100.0 }, 1));
+	/*switch (reglaFirework._tipo) {
+	case (PARTICULAS_CIRCULO):
+		_fireworks.push_back(new Firework({ 2,0,1 }, { 14.0,22.0,1.0 }, { 0.0,0.0,0.0 }, 0.99, 100, -5, reglaFirework, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 1, true, { 100.0,100.0,100.0 }, 1));
+		break;
+	case (GENERADOR):
+
+		break;
+	case (FIREWORK):
+
+		break;
+	default:
+		break;
+	}*/
 }

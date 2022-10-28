@@ -83,6 +83,11 @@ void Particle::setColor(Vector4 newColor)
 	renderItem->color = newColor;
 }
 
+void Particle::setTiempoVida(double tVida)
+{
+	tiempoVida = tVida;
+}
+
 bool Particle::getViva()
 {
 	return estaViva;
@@ -100,5 +105,10 @@ bool Particle::getInActionSpace()
 physx::PxTransform Particle::getPose()
 {
 	return pose;
+}
+
+Particle* Particle::clone(Vector3 pos, Vector3 vel, float grav, double tVida, Vector3 aSpace ) 
+{
+	return new Particle(pos, vel, { 0.0,0.0,0.0 }, 0.99, 100, grav, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), tVida, true, aSpace);;
 }
 
