@@ -37,7 +37,7 @@ private:
 
 public:
 	Firework(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float Mass, float Gravity, FireworkRule regla, RenderItem* ri, double tVida, bool viva, Vector3 aSpace, int fireworkGenerations);
-	std::list<Particle*> explode();
+	std::list<Particle*> explode(FireworkRule newRule, std::list<Firework*> &listaFireworks);
 	FireworkRule getReglaActual();
 
 };

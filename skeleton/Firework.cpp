@@ -7,14 +7,15 @@ Firework::Firework(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float
 	//tiempoVida = regla._std_dev_lifeTime * d(gen) + regla._mean_lifeTime;
 }
 
-std::list<Particle*> Firework::explode()
+std::list<Particle*> Firework::explode(FireworkRule newRule, std::list<Firework*>& listaFireworks)
 {
-	std::list<Particle*>fireworkList;
+	std::list<Particle*>ParticleList;
+	FireworkRule nuevaRegla = newRule;
 	
 	double tiempoVida = _reglaFirework._std_dev_lifeTime * d(gen) + _reglaFirework._mean_lifeTime;
 	int offset = 1.2;
 	Vector3 newPos = pose.p * offset;
-	Vector4 color{ (float)dColor(gen),(float)dColor(gen),(float)dColor(gen),1 };
+	
 	if (generations > 0) {
 		switch (_reglaFirework._tipo) {
 		case (PARTICULAS_CIRCULO):
@@ -24,28 +25,36 @@ std::list<Particle*> Firework::explode()
 			int circleOffset = 4.5;
 			for (int i = 0; i < _reglaFirework._particleCount; i++)
 			{
+				Vector4 color{ (float)dColor(gen),(float)dColor(gen),(float)dColor(gen),1 };
 				Vector3 newDir1{ float(physx::PxCos(anguloParticula) * radioExplosion), float(0), float(physx::PxSin(anguloParticula) * radioExplosion) };
 				newDir1 *= circleOffset;
 				anguloParticula += 360 / _reglaFirework._particleCount;
 				Particle* particle = new Particle(newPos, newDir1, { 0.5,0.5,0.5 }, 0.99, 100, -1, new RenderItem(CreateShape(physx::PxSphereGeometry(_reglaFirework.particleSize)), Vector4(1, 1, 1, 1)), tiempoVida, true, { 1000.0,1000.0,1000.0 });
 				particle->setColor(color);
-				fireworkList.push_back(particle);
-				/*Vector3 dir2{ (float)normal(generator),(float)normal(generator),(float)normal(generator) };
-				Vector4 colorRand{ (float)normal(generator),(float)normal(generator),(float)normal(generator),1 };
-				Firework* p = new Firework(pos, dir2, { 0.5,0.5,0.5 }, 1, 0.99, new RenderItem(CreateShape(PxSphereGeometry(sizeF)), Vector4(1, 0, 1, 1)), sizeF, nGeneraciones - 1, colorRand, tAlive / 1.25, nPart, circulo);
-				listExp.push_back(p);*/
+				ParticleList.push_back(particle);
+				
+				
 			}
 			break;
 		}
 		case (GENERADOR):
 			break;
 		case (FIREWORK):
+			for (int i = 0; i < _reglaFirework._particleCount; i++)
+			{
+				Vector4 color{ (float)dColor(gen),(float)dColor(gen),(float)dColor(gen),1 };
+				Vector3 newDir2{ _reglaFirework._std_dev_vel.x *(float)d(gen) + _reglaFirework._mean_vel.x,_reglaFirework._std_dev_vel.y * (float)d(gen) + _reglaFirework._mean_vel.y,_reglaFirework._std_dev_vel.z * (float)d(gen) + _reglaFirework._mean_vel.z };
+				Firework* fireworks = new Firework(newPos, newDir2, { 0,0,0 }, 0.99, 100, -5, nuevaRegla,new RenderItem(CreateShape(physx::PxSphereGeometry(_reglaFirework.particleSize)), Vector4(1, 1, 1, 1)), tiempoVida, true, { 1000.0,1000.0,1000.0 }, generations-1);
+				fireworks->setColor(color);
+				listaFireworks.push_back(fireworks);
+				
+			}
 			break;
 		default:
 			break;
 		}
 	}
-	return fireworkList;
+	return ParticleList;
 }
 
 FireworkRule Firework::getReglaActual()

@@ -45,7 +45,7 @@ void ParticleSystem::update(double t) {
 			(*it2)->integrate(t);
 			if (!(*it2)->getViva())
 			{
-				auto a = (*it2)->explode();
+				auto a = (*it2)->explode(_firework_rules[0], _fireworks);
 				switch ((*it2)->getReglaActual()._tipo)
 				{
 				case (PARTICULAS_CIRCULO):
@@ -59,6 +59,7 @@ void ParticleSystem::update(double t) {
 					break;
 				}
 				case (FIREWORK):
+					
 					break;
 				default:
 					break;
@@ -91,7 +92,7 @@ void ParticleSystem::createFireworkRules()
 
 	_firework_rules[0].set(PARTICULAS_CIRCULO, 2, 2, 0.999, 15, { 5, 5, 5 }, { 2, 2, 2 }, 2.25);
 	_firework_rules[1].set(GENERADOR, 8, 2, 0.999, 1, { 7, 7, 7 }, { 2, 2, 2 }, 1);
-	_firework_rules[2].set(FIREWORK, 5, 2, 0.999, 3, { 5, 5, 5 }, { 2, 2, 2 }, 1);
+	_firework_rules[2].set(FIREWORK, 2, 2, 0.999, 3, { 2, 10, 2 }, { 2, 2, 2 }, 1);
 }
 
 std::vector<FireworkRule> ParticleSystem::getFireworkRules()
@@ -101,7 +102,7 @@ std::vector<FireworkRule> ParticleSystem::getFireworkRules()
 
 void ParticleSystem::generateFirework(FireworkRule reglaFirework)
 {
-	_fireworks.push_back(new Firework({ 2,0,1 }, { 14.0,22.0,1.0 }, { 0.0,0.0,0.0 }, 0.99, 100, -5, reglaFirework, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 1, true, { 100.0,100.0,100.0 }, 1));
+	_fireworks.push_back(new Firework({ 2,0,1 }, { 14.0,22.0,1.0 }, { 0.0,0.0,0.0 }, 0.99, 100, -5, reglaFirework, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 1, true, { 100.0,100.0,100.0 }, 2));
 	/*switch (reglaFirework._tipo) {
 	case (PARTICULAS_CIRCULO):
 		_fireworks.push_back(new Firework({ 2,0,1 }, { 14.0,22.0,1.0 }, { 0.0,0.0,0.0 }, 0.99, 100, -5, reglaFirework, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 1, true, { 100.0,100.0,100.0 }, 1));
