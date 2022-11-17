@@ -20,6 +20,13 @@ public:
 	void setTiempoVida(double tVida);
 	bool getViva();
 	bool getInActionSpace();
+	float getMass();
+	float getInverseMass();
+	Vector3 getVel();
+
+
+	void clearForce();
+	void addForce(const Vector3& f);
 
 	physx::PxTransform getPose();
 
@@ -30,10 +37,12 @@ protected:
 	physx::PxTransform pose;
 	double damping, _remaining_time;
 	float mass;
+	float inverse_mass;
 	float gravity;
 	RenderItem* renderItem;
 	double tiempoVida;
 	Vector3 actionSpace;
+	Vector3 force;
 
 	bool estaViva;
 };

@@ -12,11 +12,17 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float
 	tiempoVida = tVida; 
 	estaViva = viva;
 
+	force = { 0,0,0 };
+	mass = Mass;
+	inverse_mass = (1 / mass);
+
 	actionSpace = aSpace;
 
 	renderItem = ri;
 	renderItem->transform = &pose;
 	renderItem->color = { 0.4,0.3,0.4,1 };
+
+
 	
 
 	//RegisterRenderItem(renderItem);
@@ -37,10 +43,20 @@ Particle::~Particle()
 
 void Particle::integrate(double t)
 {	
+	if (inverse_mass <= 0.0f) return;
+
 	pose.p = pose.p + vel * t;
-	vel = vel * pow(damping, t) + acel * t;
+
+	Vector3 totalAcceleration = acel;
+	totalAcceleration += force * inverse_mass;
+
+	vel += totalAcceleration * t;
+	vel *= powf(damping, t);
+	clearForce();
+
 	tiempoVida -= t;
 	if (tiempoVida <= 0 || !getInActionSpace()) estaViva = false;
+
 }
 
 /*Particle* Particle::clone() const
@@ -98,6 +114,31 @@ bool Particle::getInActionSpace()
 	if (pose.p.x < -actionSpace.x || pose.p.y < -actionSpace.y || pose.p.z < -actionSpace.z) return false;
 	else if (pose.p.x > actionSpace.x || pose.p.y > actionSpace.y || pose.p.z > actionSpace.z) return false;
 	return true;
+}
+
+float Particle::getMass()
+{
+	return mass;
+}
+
+float Particle::getInverseMass()
+{
+	return inverse_mass;
+}
+
+Vector3 Particle::getVel()
+{
+	return vel;
+}
+
+void Particle::clearForce()
+{
+	force *= 0;
+}
+
+void Particle::addForce(const Vector3& f)
+{
+	force += f;
 }
 
 
