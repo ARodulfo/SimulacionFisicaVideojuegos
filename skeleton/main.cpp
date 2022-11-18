@@ -12,6 +12,10 @@
 #include "ParticleSystem.h"
 #include "GaussianParticleGenerator.h"
 #include "UniformParticleGenerator.h"
+#include "GravityForceGenerator.h"
+#include "WindGenerator.h"
+#include "WhirlwindGenerator.h"
+#include "ExplosionGenerator.h"
 
 #include <iostream>
 #include <vector>
@@ -34,9 +38,15 @@ std::vector<Proyectil*>	proyectiles;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 Particle* gParticle = NULL;
+
 ParticleSystem* sistema1 = NULL;
 GaussianParticleGenerator* gaussianGen = NULL;
 UniformParticleGenerator* uniformGen = NULL;
+
+GravityForceGenerator* gravedad = NULL;
+WindGenerator* viento = NULL;
+WhirlwindGenerator* torbellino = NULL;
+ExplosionGenerator* explosion = NULL;
 
 
 //vect <Proyectil> proyectiles;
@@ -67,14 +77,6 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	sistema1 = new ParticleSystem();
-	//aussianGen = new GaussianParticleGenerator({ 1.5,1.5,1.5 }, { 3.0,3.0,3.0 }, "fuente", { 1.0,1.0,1.0 }, { 10.0,25.0,2.0 }, 1, 5, { 1000.0,1000.0,1000.0 }, {0,0,0}, true);
-	//uniformGen = new UniformParticleGenerator({ 1.5,1.5,1.5 }, { 3.0,3.0,3.0 }, "fuente", { 1.0,1.0,1.0 }, { 10.0,25.0,2.0 }, 1, 2, 0.5, { 1000.0,1000.0,1000.0 });
-	//sistema1->addGenerator(gaussianGen);
-	sistema1->createFireworkRules();
-	sistema1->generateFirework(sistema1->getFireworkRules()[1]);
-	
-
 	/*Vector3 Pos = { 0.0, 0.0, 0.0 };
 	Vector3 Vel = { 0.0, 0.0, 0.0 };
 	Vector3 Acel = { 0.0,0.0,0.0 };
@@ -82,6 +84,15 @@ void initPhysics(bool interactive)
 	int Mass = 0;
 	float Gravity = 0;
 	gParticle = new Particle(GetCamera()->getTransform().p +  Vector3{ -100,0,-100 }, Vel, Acel, Damping, Mass, Gravity,new RenderItem(CreateShape(PxSphereGeometry(2.25)), Vector4(1, 0, 1, 1)),6, true);*/
+
+	//sistema1 = new ParticleSystem();
+	//gaussianGen = new GaussianParticleGenerator({ 1.5,1.5,1.5 }, { 3.0,3.0,3.0 }, "fuente", { 1.0,1.0,1.0 }, { 10.0,25.0,2.0 }, 1, 5, { 1000.0,1000.0,1000.0 }, {0,0,0}, true);
+	//uniformGen = new UniformParticleGenerator({ 1.5,1.5,1.5 }, { 3.0,3.0,3.0 }, "fuente", { 1.0,1.0,1.0 }, { 10.0,25.0,2.0 }, 1, 2, 0.5, { 1000.0,1000.0,1000.0 });
+	//sistema1->addGenerator(gaussianGen);
+	//sistema1->createFireworkRules();
+	//sistema1->generateFirework(sistema1->getFireworkRules()[2]);
+	
+
 
 	}
 
@@ -92,9 +103,9 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-	for (int i = 0; i < proyectiles.size(); i++) {
+	/*for (int i = 0; i < proyectiles.size(); i++) {
 		proyectiles[i]->integrate(t);
-	}
+	}*/
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	/*gParticle->integrate(t);*/
@@ -133,10 +144,27 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case 'C':
 	{
-		Proyectil* proy = new Proyectil(GetCamera()->getTransform().p, GetCamera()->getDir().getNormalized(), { 0.0,0.0,9.0 }, 0.99, 300, -50.00,CAÑON, new RenderItem(CreateShape(PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 6, true,{0,0,0});
-		Vector3 dir = GetCamera()->getDir().getNormalized();
-		proyectiles.push_back(proy);
-		//new Proyectil(CAÑON);
+		//Proyectil* proy = new Proyectil(GetCamera()->getTransform().p, GetCamera()->getDir().getNormalized(), { 0.0,0.0,9.0 }, 0.99, 300, -50.00,CAÑON, new RenderItem(CreateShape(PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 6, true,{0,0,0});
+		//Vector3 dir = GetCamera()->getDir().getNormalized();
+		//proyectiles.push_back(proy);
+		////new Proyectil(CAÑON);
+		break;
+	}
+	case 'G':	
+	{
+
+		break;
+	}
+	case 'V':
+	{
+		break;
+	}
+	case 'T':
+	{
+		break;
+	}
+	case 'E':
+	{
 		break;
 	}
 	default:

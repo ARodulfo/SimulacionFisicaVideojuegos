@@ -143,6 +143,11 @@ void Particle::addForce(const Vector3& f)
 
 
 
+Vector3 Particle::getPos()
+{
+	return pose.p;
+}
+
 physx::PxTransform Particle::getPose()
 {
 	return pose;

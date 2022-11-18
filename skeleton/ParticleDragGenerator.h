@@ -5,8 +5,8 @@
 class ParticleDragGenerator : public ForceGenerator
 {
 public:
-	ParticleDragGenerator();
-	ParticleDragGenerator(const float k1, const float k2);
+	ParticleDragGenerator() {};
+	ParticleDragGenerator(const float k1, const float k2) : _k1(k1), _k2(k2) {};
 	virtual void updateForce(Particle* particle, double t);
 	inline void setDrag(float k1, const float k2) { _k1 = k1; _k2 = k2; }
 	inline float getK1() { return (_k1); }
@@ -15,6 +15,5 @@ public:
 protected:
 	float _k1; //Coef for velocity
 	float _k2; //Coef for square velocity
-
 };
 

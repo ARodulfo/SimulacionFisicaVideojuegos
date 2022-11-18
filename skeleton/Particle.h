@@ -28,6 +28,7 @@ public:
 	void clearForce();
 	void addForce(const Vector3& f);
 
+	Vector3 getPos();
 	physx::PxTransform getPose();
 
 	virtual Particle* clone(Vector3 pos, Vector3 vel, float grav, double tVida, Vector3 aSpace);
