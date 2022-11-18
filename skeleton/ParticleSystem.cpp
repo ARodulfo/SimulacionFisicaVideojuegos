@@ -88,6 +88,12 @@ void ParticleSystem::addGenerator(ParticleGenerator* gen) {
 	_particle_generators.push_back(gen);
 }
 
+void ParticleSystem::addParticleWithForce(ForceGenerator* generator, Particle* particula)
+{
+	_particles.push_back(particula);
+	forceRegistry.addRegistry(generator, particula);
+}
+
 void ParticleSystem::createFireworkRules()
 {
 	_firework_rules = std::vector<FireworkRule>(3);

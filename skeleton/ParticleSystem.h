@@ -23,6 +23,7 @@ public:
 	void update(double t);
 	void addGenerator(ParticleGenerator* gen);
 	void addParticle(Particle* particula) { _particles.push_back(particula); }
+	void addParticleWithForce(ForceGenerator* generator, Particle* particula);
 	void addForceRegistry(ForceGenerator* generator, Particle* particula) { forceRegistry.addRegistry(generator, particula); };
 	ParticleGenerator* getParticleGenerator(std::string name);
 	void createFireworkRules();
