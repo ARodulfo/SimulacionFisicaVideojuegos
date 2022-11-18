@@ -6,7 +6,8 @@ ParticleSystem::ParticleSystem() {
 }
 
 void ParticleSystem::update(double t) {
-	for (auto gen : _particle_generators) {
+	for (auto gen : _particle_generators) 
+	{
 		if (gen != NULL) {
 			auto particleList = gen->generateParticles();
 			for (auto particula : particleList) {
@@ -14,6 +15,7 @@ void ParticleSystem::update(double t) {
 			}
 		}
 	}
+	forceRegistry.updateForces(t);
 	std::list<Particle*>::iterator it = _particles.begin();
 	while (it != _particles.end())
 	{

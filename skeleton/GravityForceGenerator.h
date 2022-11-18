@@ -6,7 +6,7 @@
 class GravityForceGenerator : public ForceGenerator
 {
 public:
-	GravityForceGenerator(const Vector3& g);
+	GravityForceGenerator(const Vector3& g) : _gravity(g) {}
 
 	virtual void updateForce(Particle* particle, double t);
 
@@ -14,6 +14,5 @@ public:
 
 protected:
 	Vector3 _gravity;
-
 };
 

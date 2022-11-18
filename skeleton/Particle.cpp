@@ -6,7 +6,7 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float
 	vel = Vel;
 	acel = Acel;
 	gravity = Gravity;
-	acel.y = gravity;
+	//acel.y = gravity;
 
 	damping = Damping;
 	tiempoVida = tVida; 
@@ -45,7 +45,10 @@ void Particle::integrate(double t)
 {	
 	if (inverse_mass <= 0.0f) return;
 
-	pose.p = pose.p + vel * t;
+	tiempoVida -= t;
+	if (tiempoVida <= 0 || !getInActionSpace()) estaViva = false;
+
+	pose.p += vel * t;
 
 	Vector3 totalAcceleration = acel;
 	totalAcceleration += force * inverse_mass;
@@ -54,8 +57,7 @@ void Particle::integrate(double t)
 	vel *= powf(damping, t);
 	clearForce();
 
-	tiempoVida -= t;
-	if (tiempoVida <= 0 || !getInActionSpace()) estaViva = false;
+	
 
 }
 
@@ -133,7 +135,7 @@ Vector3 Particle::getVel()
 
 void Particle::clearForce()
 {
-	force *= 0;
+	force = Vector3(0);
 }
 
 void Particle::addForce(const Vector3& f)

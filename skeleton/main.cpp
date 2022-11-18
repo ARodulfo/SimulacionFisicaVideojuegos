@@ -44,9 +44,21 @@ GaussianParticleGenerator* gaussianGen = NULL;
 UniformParticleGenerator* uniformGen = NULL;
 
 GravityForceGenerator* gravedad = NULL;
+Vector3 gravedadInicial{ 0,150,0 };
+float variacionGravedad = 150;
+
 WindGenerator* viento = NULL;
+float k1Wind = 0.7, k2Wind = 0.07;
+Vector3 velocityWind{ 10,0,0 };
+
 WhirlwindGenerator* torbellino = NULL;
+float k1Whirlwind = 3, k2Whirlwind = 0.03, forceWhirlwind = 1;
+Vector3 origenWhirlwind{ 0,0,0 };
+
 ExplosionGenerator* explosion = NULL;
+float radiusExplosion = 30, blastExplosion = 25, tiempoExplosion = 2;
+Vector3 centroExplosion{ 0,0,0 };
+
 
 
 //vect <Proyectil> proyectiles;
@@ -91,8 +103,15 @@ void initPhysics(bool interactive)
 	//sistema1->addGenerator(gaussianGen);
 	//sistema1->createFireworkRules();
 	//sistema1->generateFirework(sistema1->getFireworkRules()[2]);
-	
+	sistema1 = new ParticleSystem();
 
+	gravedad = new GravityForceGenerator(gravedadInicial);
+
+	viento = new WindGenerator(k1Wind, k2Wind, velocityWind);
+
+	torbellino = new WhirlwindGenerator(k1Whirlwind, k2Whirlwind, origenWhirlwind, forceWhirlwind);
+
+	explosion = new ExplosionGenerator(radiusExplosion, blastExplosion, tiempoExplosion, centroExplosion);
 
 	}
 
@@ -152,19 +171,59 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 	case 'G':	
 	{
-
+		variacionGravedad += 10;
+		gravedad->setGravity({ 0,variacionGravedad,0 });
+		Particle* particula = new Particle({ 0,15,0 }, { 0,150,0 }, { 0,0,0 }, 0.99, 0.2, 9.8,new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 3, true, { 1000.0,1000.0,1000.0 });
+		sistema1->addForceRegistry(gravedad, particula);
+		sistema1->addParticle(particula);
 		break;
 	}
 	case 'V':
 	{
+		k1Wind -= 0.1;
+		k2Wind -= 0.01;
+		viento->setDrag(k1Wind, k2Wind);
+		Particle* particula = new Particle({ 0,0,0 }, { -140,0,0 }, { 0,0,0 }, 0.99, 0.2, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 20, true, { 1000.0,1000.0,1000.0 });
+		sistema1->addForceRegistry(viento, particula);
+		sistema1->addParticle(particula);
 		break;
 	}
 	case 'T':
 	{
+		forceWhirlwind += 0.02;
+		torbellino->setForce(forceWhirlwind);
+		Particle* particula = new Particle({ 0,15,0 }, { 15,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
+		sistema1->addForceRegistry(torbellino, particula);
+		sistema1->addParticle(particula);
 		break;
 	}
 	case 'E':
 	{
+		Particle* particula1 = new Particle({ 15,0,0 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
+		Particle* particula2 = new Particle({ 0,0,15 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
+		Particle* particula3 = new Particle({ 15,0,15 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
+		Particle* particula4 = new Particle({ -15,0,0 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
+		Particle* particula5 = new Particle({ 0,0,-15 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
+		Particle* particula6 = new Particle({ -15,0,-15 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
+
+		blastExplosion += 50;
+		radiusExplosion += 5;
+		explosion->setBlast(blastExplosion);
+		explosion->setRadius(radiusExplosion);
+
+		sistema1->addForceRegistry(explosion, particula1);
+		sistema1->addParticle(particula1);
+		sistema1->addForceRegistry(explosion, particula2);
+		sistema1->addParticle(particula2);
+		sistema1->addForceRegistry(explosion, particula3);
+		sistema1->addParticle(particula3);
+		sistema1->addForceRegistry(explosion, particula4);
+		sistema1->addParticle(particula4);
+		sistema1->addForceRegistry(explosion, particula5);
+		sistema1->addParticle(particula5);
+		sistema1->addForceRegistry(explosion, particula6);
+		sistema1->addParticle(particula6);
+
 		break;
 	}
 	default:
