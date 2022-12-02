@@ -1,13 +1,14 @@
 #include "SpringForceGenerator.h"
 
-void SpringForceGenerator::updateForce(Particle* particle)
+void SpringForceGenerator::updateForce(Particle* particle, double t)
 {
-	Vector3 force = _other->getPos() - particle->getPos();
+	Vector3 f = particle->getPos();
+	f -= _other->getPos();
 
-	const float length = force.normalize();
-	const float delta_x = length - _resting_length;
+	float length = f.normalize();
+	length = (length - _resting_length);
+	if (length <= 0.0f) return;
 
-	force *= delta_x * _k;
-
-	particle->addForce(force);
+	f *= -(length * _k);
+	particle->addForce(f);
 }

@@ -112,3 +112,18 @@ void ParticleSystem::generateFirework(FireworkRule reglaFirework)
 {
 	_fireworks.push_back(new Firework({ 2,0,1 }, { 14.0,22.0,1.0 }, { 0.0,0.0,0.0 }, 0.99, 100, -5, reglaFirework, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 1, true, { 100.0,100.0,100.0 }, 2));
 }
+
+void ParticleSystem::removeParticles()
+{
+	std::list<Particle*>::iterator it = _particles.begin();
+	while (it != _particles.end())
+	{
+
+		if (*it != NULL) {
+					delete* it;
+					it = _particles.erase(it);
+		}
+			else it++;
+		
+	}
+}

@@ -48,13 +48,14 @@ void Particle::integrate(double t)
 	tiempoVida -= t;
 	if (tiempoVida <= 0 || !getInActionSpace()) estaViva = false;
 
-	pose.p += vel * t;
 
 	Vector3 totalAcceleration = acel;
 	totalAcceleration += force * inverse_mass;
 
 	vel += totalAcceleration * t;
 	vel *= powf(damping, t);
+
+	pose.p += vel * t;
 	clearForce();
 
 	

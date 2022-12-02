@@ -29,4 +29,5 @@ public:
 	void createFireworkRules();
 	std::vector<FireworkRule> getFireworkRules();
 	void generateFirework(FireworkRule reglaFirework);
+	void removeParticles();
 };
