@@ -212,28 +212,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 	case 'E':
 	{
-
-		/*Particle* particula1 = new Particle({ 15,0,0 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula2 = new Particle({ 0,0,15 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula3 = new Particle({ 15,0,15 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula4 = new Particle({ -15,0,0 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula5 = new Particle({ 0,0,-15 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula6 = new Particle({ -15,0,-15 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula7 = new Particle({ 7,-5,0 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula8 = new Particle({ 0,-5,7 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula9 = new Particle({ 7,-5,7 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula10 = new Particle({ -7,-5,0 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula11 = new Particle({ 0,-5,-7 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula12 = new Particle({ -7,-5,-7 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula13 = new Particle({ 7,5,0 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula14 = new Particle({ 0,5,7 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula15 = new Particle({ 7,5,7 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula16 = new Particle({ -7,5,0 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula17 = new Particle({ 0,5,-7 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula18 = new Particle({ -7,5,-7 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula19 = new Particle({ 0,-5,0 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });
-		Particle* particula20 = new Particle({ 0,5,0 }, { 0,0,0 }, { 0,0,0 }, 0.99, 1, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 30, true, { 1000.0,1000.0,1000.0 });*/
-
 		auto particleList = gaussianGen->generateParticles();
 		
 		blastExplosion += 500;
@@ -244,48 +222,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		for (auto particula : particleList) {
 			sistema1->addParticleWithForce(explosion, particula);
 		}
-
-		/*sistema1->addForceRegistry(explosion, particula1);
-		sistema1->addParticle(particula1);
-		sistema1->addForceRegistry(explosion, particula2);
-		sistema1->addParticle(particula2);
-		sistema1->addForceRegistry(explosion, particula3);
-		sistema1->addParticle(particula3);
-		sistema1->addForceRegistry(explosion, particula4);
-		sistema1->addParticle(particula4);
-		sistema1->addForceRegistry(explosion, particula5);
-		sistema1->addParticle(particula5);
-		sistema1->addForceRegistry(explosion, particula6);
-		sistema1->addParticle(particula6);
-		sistema1->addForceRegistry(explosion, particula7);
-		sistema1->addParticle(particula7);
-		sistema1->addForceRegistry(explosion, particula8);
-		sistema1->addParticle(particula8);
-		sistema1->addForceRegistry(explosion, particula9);
-		sistema1->addParticle(particula9);
-		sistema1->addForceRegistry(explosion, particula10);
-		sistema1->addParticle(particula10);
-		sistema1->addForceRegistry(explosion, particula11);
-		sistema1->addParticle(particula11);
-		sistema1->addForceRegistry(explosion, particula12);
-		sistema1->addParticle(particula12);
-		sistema1->addForceRegistry(explosion, particula13);
-		sistema1->addParticle(particula13);
-		sistema1->addForceRegistry(explosion, particula14);
-		sistema1->addParticle(particula14);
-		sistema1->addForceRegistry(explosion, particula15);
-		sistema1->addParticle(particula15);
-		sistema1->addForceRegistry(explosion, particula16);
-		sistema1->addParticle(particula16);
-		sistema1->addForceRegistry(explosion, particula17);
-		sistema1->addParticle(particula17);
-		sistema1->addForceRegistry(explosion, particula18);
-		sistema1->addParticle(particula18);
-		sistema1->addForceRegistry(explosion, particula19);
-		sistema1->addParticle(particula19);
-		sistema1->addForceRegistry(explosion, particula20);
-		sistema1->addParticle(particula20);*/
-
 		break;
 	}
 	default:
