@@ -3,7 +3,7 @@
 #include "core.hpp"
 #include <vector>
 class BodyForceGenerator;
-class BodyExplosion;
+class SolidBodyExplosion;
 using namespace physx;
 
 struct SolidBody {
@@ -19,6 +19,6 @@ struct SolidBody {
 		delete item;
 	}
 
-	std::vector<BodyForceGenerator*> bodyForcesRegistries;
-	BodyExplosion* bodyExplosionForce;
+	/*std::vector<BodyForceGenerator*> bodyForcesRegistries;*/
+	SolidBodyExplosion* bodyExplosionForce;
 };

@@ -13,6 +13,6 @@ public:
 
 	void addRegistry(RigidForceGenerator* fg, SolidBody* p);
 
-	void deleteParticleRegistry(SolidBody* p);
+	void deleteBodyRegistry(SolidBody* p);
 };
 

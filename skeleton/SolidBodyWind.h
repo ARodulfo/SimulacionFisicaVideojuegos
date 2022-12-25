@@ -10,5 +10,6 @@ private:
 public :
 	SolidBodyWind(const Vector3 windF) : windForce(windF) {};
 	void updateForce(SolidBody* body, float t);
+	void setWindForce(const Vector3 windF) { windForce = windF; }
 };
 

@@ -27,6 +27,11 @@
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="AnchoredSpringForceGenerator.cpp" />
     <ClCompile Include="BuoyancyForceGenerator.cpp" />
+    <ClCompile Include="SolidBodySystem.cpp" />
+    <ClCompile Include="RigidBodyForceRegistry.cpp" />
+    <ClCompile Include="RigidForceGenerator.cpp" />
+    <ClCompile Include="SolidBodyWind.cpp" />
+    <ClCompile Include="SolidBodyExplosion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -55,6 +60,12 @@
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="AnchoredSpringForceGenerator.h" />
     <ClInclude Include="BuoyancyForceGenerator.h" />
+    <ClInclude Include="SolidBodyInterface.h" />
+    <ClInclude Include="SolidBodySystem.h" />
+    <ClInclude Include="RigidBodyForceRegistry.h" />
+    <ClInclude Include="RigidForceGenerator.h" />
+    <ClInclude Include="SolidBodyWind.h" />
+    <ClInclude Include="SolidBodyExplosion.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

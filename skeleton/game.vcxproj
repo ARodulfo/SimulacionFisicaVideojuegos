@@ -271,6 +271,11 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="RigidBodyForceRegistry.cpp" />
+    <ClCompile Include="RigidForceGenerator.cpp" />
+    <ClCompile Include="SolidBodyExplosion.cpp" />
+    <ClCompile Include="SolidBodySystem.cpp" />
+    <ClCompile Include="SolidBodyWind.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
     <ClCompile Include="WhirlwindGenerator.cpp" />
@@ -295,6 +300,12 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="RigidBodyForceRegistry.h" />
+    <ClInclude Include="RigidForceGenerator.h" />
+    <ClInclude Include="SolidBodyExplosion.h" />
+    <ClInclude Include="SolidBodyInterface.h" />
+    <ClInclude Include="SolidBodySystem.h" />
+    <ClInclude Include="SolidBodyWind.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
     <ClInclude Include="WhirlwindGenerator.h" />

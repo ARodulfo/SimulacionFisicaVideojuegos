@@ -19,6 +19,7 @@
 #include "AnchoredSpringForceGenerator.h"
 #include "SpringForceGenerator.h"
 #include "BuoyancyForceGenerator.h"
+#include "SolidBodySystem.h"
 
 #include <iostream>
 #include <vector>
@@ -75,6 +76,9 @@ Particle* agua = NULL;
 physx::PxTransform* aguaPos = NULL;
 BuoyancyForceGenerator* flotador = NULL;
 
+physx::PxMaterial* defectMat = NULL;
+SolidBodySystem* sistemaRigidos = NULL;
+
 
 //vect <Proyectil> proyectiles;
 ContactReportCallback gContactReportCallback;
@@ -113,12 +117,12 @@ void initPhysics(bool interactive)
 	gParticle = new Particle(GetCamera()->getTransform().p +  Vector3{ -100,0,-100 }, Vel, Acel, Damping, Mass, Gravity,new RenderItem(CreateShape(PxSphereGeometry(2.25)), Vector4(1, 0, 1, 1)),6, true);*/
 
 	//sistema1 = new ParticleSystem();
-	gaussianGen = new GaussianParticleGenerator({ 10.5,10.5,10.5 }, { 0,0,0 }, "fuente", { 0,0,0 }, { 0,0,0 }, 20, 20, { 1000.0,1000.0,1000.0 }, {0,0,0}, true);
+	//gaussianGen = new GaussianParticleGenerator({ 10.5,10.5,10.5 }, { 0,0,0 }, "fuente", { 0,0,0 }, { 0,0,0 }, 20, 20, { 1000.0,1000.0,1000.0 }, {0,0,0}, true);
 	//uniformGen = new UniformParticleGenerator({ 1.5,1.5,1.5 }, { 3.0,3.0,3.0 }, "fuente", { 1.0,1.0,1.0 }, { 10.0,25.0,2.0 }, 1, 2, 0.5, { 1000.0,1000.0,1000.0 });
 	//sistema1->addGenerator(gaussianGen);
 	//sistema1->createFireworkRules();
 	//sistema1->generateFirework(sistema1->getFireworkRules()[2]);
-	sistema1 = new ParticleSystem();
+	/*sistema1 = new ParticleSystem();
 
 	gravedad1 = new GravityForceGenerator({0,9.8,0});
 	gravedad2 = new GravityForceGenerator(gravedadInicial2);
@@ -163,7 +167,12 @@ void initPhysics(bool interactive)
 
 	sistema1->addForceRegistry(gravedad1, particula4);
 	sistema1->addForceRegistry(flotador, particula4);
-	sistema1->addParticle(particula4);
+	sistema1->addParticle(particula4);*/
+
+	defectMat = gPhysics->createMaterial(0.2f, 0.2f, 0.5f);
+
+	sistemaRigidos = new SolidBodySystem(gScene, gPhysics, { 0, 50, 0 }, defectMat);
+	sistemaRigidos->setSizeInertia(6, 3);
 
 }
 
@@ -180,7 +189,8 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	/*gParticle->integrate(t);*/
-	sistema1->update(t);
+	//sistema1->update(t);
+	sistemaRigidos->update(t);
 }
 
 // Function to clean data
@@ -188,9 +198,9 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-	for (int i = 0; i < proyectiles.size(); i++) {
+	/*for (int i = 0; i < proyectiles.size(); i++) {
 		delete proyectiles[i];
-	}
+	}*/
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
 	gDispatcher->release();
@@ -240,12 +250,19 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}*/
 	case 'V':
 	{
-		k1Wind -= 0.1;
+		/*k1Wind -= 0.1;
 		k2Wind -= 0.01;
 		viento->setDrag(k1Wind, k2Wind);
 		Particle* particula = new Particle({ 0,0,0 }, { -140,0,0 }, { 0,0,0 }, 0.99, 0.2, 9.8, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), 20, true, { 1000.0,1000.0,1000.0 });
 		sistema1->addForceRegistry(viento, particula);
 		sistema1->addParticle(particula);
+		break;*/
+		sistemaRigidos->setViento(Vector3(50, 0, 0));
+		break;
+	}
+	case 'B':
+	{
+		sistemaRigidos->setViento(Vector3(0, 0, 0));
 		break;
 	}
 	case 'T':
@@ -259,19 +276,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 	case 'E':
 	{
-		auto particleList = gaussianGen->generateParticles();
-		
-		blastExplosion += 500;
-		radiusExplosion += 10;
-		explosion->setBlast(blastExplosion);
-		explosion->setRadius(radiusExplosion);
-
-		for (auto particula : particleList) {
-			sistema1->addParticleWithForce(explosion, particula);
-		}
+		sistemaRigidos->explosionActiva();
 		break;
 	}
-	case '+':
+	/*case '+':
 	{
 		muelleAncla->increaseK();
 		break;
@@ -280,7 +288,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		muelleAncla->decreaseK();
 		break;
-	}
+	}*/
 	/*case 'G':
 	{
 		sistema1->removeParticles();
