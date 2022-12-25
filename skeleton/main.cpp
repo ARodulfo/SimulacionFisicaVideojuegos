@@ -296,6 +296,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
+	std::cout << "Se ha producido una colision\n";
+
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
 }
