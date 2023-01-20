@@ -28,10 +28,10 @@ std::list<Particle*> GaussianParticleGenerator::generateParticles()
             auxPos.y = std_dev_pos.y * d(gen) + _mean_pos.y;
             auxPos.z = std_dev_pos.z * d(gen) + _mean_pos.z;
 
-            newParticle = new Particle(auxPos, auxVel, { 0.0,0.0,0.0 }, 0.99, 100, _gravity, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), _tVida, true, actionSpace);
+            newParticle = new Particle(auxPos, auxVel, { 0.0,0.0,0.0 }, 0.99, 100, _gravity, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(0, 0, 1, 1)), _tVida, true, actionSpace);
         }
         else {
-            newParticle = new Particle(initialPos, auxVel, { 0.0,0.0,0.0 }, 0.99, 100, _gravity, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(1, 1, 1, 1)), _tVida, true, actionSpace);
+            newParticle = new Particle(initialPos, auxVel, { 0.0,0.0,0.0 }, 0.99, 100, _gravity, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(0, 0, 0, 1)), _tVida, true, actionSpace);
         }
         
 

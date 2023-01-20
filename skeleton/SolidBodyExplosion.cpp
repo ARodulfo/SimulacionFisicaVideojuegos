@@ -2,7 +2,7 @@
 
 void SolidBodyExplosion::updateForce(SolidBody* solidBody, float t)
 {
-	if (!explota) return;
+	//if (!explota) return;
 	//Force
 	Vector3 force;
 	float particleDistance = sqrt((pow(solidBody->rigid->getGlobalPose().p.x - explosionCenter.x, 2)) + (pow(solidBody->rigid->getGlobalPose().p.y - explosionCenter.y, 2)) + (pow(solidBody->rigid->getGlobalPose().p.z - explosionCenter.z, 2)));

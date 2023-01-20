@@ -12,7 +12,7 @@ std::list<Particle*> Firework::explode(FireworkRule newRule, std::list<Firework*
 	std::list<Particle*>ParticleList;
 	FireworkRule nuevaRegla = newRule;
 	
-	double tiempoVida = _reglaFirework._std_dev_lifeTime * d(gen) + _reglaFirework._mean_lifeTime;
+	double tiempoVida = 1;
 	int offset = 1.2;
 	Vector3 newPos = pose.p * offset;
 	

@@ -8,6 +8,7 @@ using namespace physx;
 
 struct SolidBody {
 	PxRigidDynamic* rigid = nullptr;
+	//PxRigidStatic* statRigid = nullptr;
 	bool isnew;
 	float life;
 	RenderItem* item = nullptr;
@@ -21,4 +22,6 @@ struct SolidBody {
 
 	/*std::vector<BodyForceGenerator*> bodyForcesRegistries;*/
 	SolidBodyExplosion* bodyExplosionForce;
+	PxRigidDynamic* getRigidDin() { return rigid; }
+	//PxRigidStatic* getRigidStat() { return statRigid; }
 };

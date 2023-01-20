@@ -23,6 +23,5 @@ public:
 	~GaussianParticleGenerator();
 	std::list<Particle*> generateParticles() override;
 
-
 };
 

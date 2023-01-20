@@ -37,3 +37,10 @@ std::list<Particle*> UniformParticleGenerator::generateParticles()
     }
     return listaParticulas;
 }
+
+void UniformParticleGenerator::generateUniformNumbers(Vector3 _std_dev_vel, Vector3 mean_vel, Vector3& resultVel)
+{
+    resultVel.x = (_mean_pos.x + pos_width.x / 2) * d(gen) + (_mean_pos.x - pos_width.x / 2);
+    //resultVel.y = (_mean_pos.y + pos_width.y / 2) * d(gen) + (_mean_pos.y - pos_width.y / 2);
+    resultVel.z = (_mean_pos.z + pos_width.z / 2) * d(gen) + (_mean_pos.z - pos_width.z / 2);
+}

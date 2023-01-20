@@ -18,5 +18,6 @@ public:
 	UniformParticleGenerator(Vector3 _std_dev_pos, Vector3 _std_dev_vel, std::string name, Vector3 mean_pos, Vector3 mean_vel, int num_particles, double partVida, double genProb, Vector3 aSpace);
 	~UniformParticleGenerator();
 	std::list<Particle*> generateParticles() override;
+	void generateUniformNumbers(Vector3 _std_dev_vel, Vector3 mean_vel, Vector3& resultVel);
 };
 

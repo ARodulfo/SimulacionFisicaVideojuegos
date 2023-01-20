@@ -5,6 +5,10 @@
 #include "Firework.h"
 #include "ParticleForceRegistry.h"
 #include "ForceGenerator.h"
+#include "GravityForceGenerator.h"
+#include "WindGenerator.h"
+#include "UniformParticleGenerator.h"
+
 #include <string>
 
 
@@ -17,6 +21,14 @@ private:
 	std::list<ParticleGenerator*> _particle_generators;
 	std::vector<FireworkRule> _firework_rules;
 	ParticleForceRegistry forceRegistry;
+	UniformParticleGenerator* numberGenerator;
+
+	GravityForceGenerator* gravityGen;
+	WindGenerator* windGen;
+	bool activeFireworkFountain = true;
+
+	float timeSinceLastLeak = 0;
+	float step = 1;
 
 public:
 	ParticleSystem();
@@ -29,5 +41,6 @@ public:
 	void createFireworkRules();
 	std::vector<FireworkRule> getFireworkRules();
 	void generateFirework(FireworkRule reglaFirework);
+	void activateFireworkFountain() { activeFireworkFountain = true; }
 	void removeParticles();
 };

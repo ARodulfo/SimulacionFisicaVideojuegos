@@ -20,7 +20,7 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acel, double Damping, float
 
 	renderItem = ri;
 	renderItem->transform = &pose;
-	renderItem->color = { 0.4,0.3,0.4,1 };
+	//renderItem->color = { 0.4,0.3,0.4,1 };
 
 
 	

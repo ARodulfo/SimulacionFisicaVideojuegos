@@ -46,21 +46,24 @@ void SolidBodySystem::update(float t)
 	}
 
 	addForceRegistry(solidViento, getBodies());
-	addExplosionForceRegistry(solidExplosion, getBodies());
+	//addExplosionForceRegistry(solidExplosion, getBodies());
 	auto i = bodies.begin();
 
 	forceRegistry.updateForces(t);
 
 	while (i != bodies.end()) {
-		(*i)->rigid->addForce((*i)->force, PxForceMode::eFORCE);
-		(*i)->force = { 0.0, 0.0, 0.0 };
-		(*i)->life -= t;
 
-		if ((*i)->life < 0) {
-			forceRegistry.deleteBodyRegistry((*i));
-			delete((*i));
-			i = bodies.erase(i);
-		}
+			(*i)->rigid->addForce((*i)->force, PxForceMode::eFORCE);
+			(*i)->force = { 0.0, 0.0, 0.0 };
+			(*i)->life -= t;
+
+			if ((*i)->life < 0) {
+				forceRegistry.deleteBodyRegistry((*i));
+				delete((*i));
+				i = bodies.erase(i);
+			}
+
+		
 		else i++;
 	}
 }
@@ -74,4 +77,35 @@ void SolidBodySystem::setSizeInertia(float s, float i)
 std::vector<SolidBody*>& SolidBodySystem::getBodies()
 {
 	return bodies;
+}
+
+void SolidBodySystem::shootRigid(Vector3 _vel, PxTransform _pos)
+{
+	if (colorR) {
+		color = { (float(rand() % 10)) / 10.0f, (float(rand() % 10)) / 10.0f , (float(rand() % 10)) / 10.0f , 1 };
+	}
+
+	SolidBody* newBody = new SolidBody();
+	newBody->rigid = physics->createRigidDynamic(_pos);
+	PxShape* newShape = CreateShape(PxSphereGeometry(2.0), bodyMaterial);
+	newBody->rigid->attachShape(*newShape);
+
+	Vector3 vel = _vel;
+	newBody->rigid->setLinearVelocity(vel);
+	int mass = 5;
+	newBody->rigid->setMass(mass);
+
+	if (inertia == 0)PxRigidBodyExt::updateMassAndInertia(*newBody->rigid, bodySize * bodySize * bodySize);
+	else PxRigidBodyExt::updateMassAndInertia(*newBody->rigid, inertia);
+
+	scene->addActor(*newBody->rigid);
+	newBody->isnew = true;
+	newBody->life = 5;
+	newBody->force = { 0.0, 0.0, 0.0 };
+	newBody->torque = { 0.0, 0.0, 0.0 };
+	newBody->item = new RenderItem(newShape, newBody->rigid, color);
+
+	bodies.push_back(newBody);
+	balls.push_back(newBody);
+
 }
