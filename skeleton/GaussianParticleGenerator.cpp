@@ -31,7 +31,7 @@ std::list<Particle*> GaussianParticleGenerator::generateParticles()
             newParticle = new Particle(auxPos, auxVel, { 0.0,0.0,0.0 }, 0.99, 100, _gravity, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(0, 0, 1, 1)), _tVida, true, actionSpace);
         }
         else {
-            newParticle = new Particle(initialPos, auxVel, { 0.0,0.0,0.0 }, 0.99, 100, _gravity, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(0, 0, 0, 1)), _tVida, true, actionSpace);
+            newParticle = new Particle(initialPos, auxVel, { 0.0,0.0,0.0 }, 0.99, 100, _gravity, new RenderItem(CreateShape(physx::PxSphereGeometry(2.0)), Vector4(0, 0, 1, 1)), _tVida, true, actionSpace);
         }
         
 
